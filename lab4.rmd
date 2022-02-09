@@ -1,0 +1,28 @@
+---
+title: "lab04"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(tidyverse)
+library(knitr)
+library(broom)
+```
+```{r}
+data <- diamonds
+glimpse(diamonds)
+```
+```{r}
+d_sub <- subset(data,  carat == .5)
+```
+There are 1258 observations in the dataset where carats are .5
+
+```{r}
+ggplot(data = d_sub, aes(x=cut)) +
+         geom_bar() + labs(title = "number of diamonds per cut type")
+
+```
+Cuts of fair and good have the fewest observations. 
