@@ -26,3 +26,54 @@ ggplot(data = d_sub, aes(x=cut)) +
 
 ```
 Cuts of fair and good have the fewest observations. 
+
+```{r}
+combine <- d_sub %>% 
+  mutate(cut = fct_lump(cut, n = 3, other_level = "Fair and Good")) 
+
+```
+```{r}
+ggplot(data = combine, aes(x=cut)) +
+         geom_bar() + labs(title = "number of diamonds per cut type")
+
+```
+```{r}
+ggplot(data = combine, aes(x=cut, y = price)) + geom_boxplot() + labs(title = "asccoation between diamond cut and price ", y = "price USD")
+```
+```{r}
+vg <- combine %>% filter(cut == "Very Good")
+p <- combine %>% filter(cut == "Premium")
+i <- combine %>% filter(cut == "Ideal")
+fg <- combine %>% filter(cut == "Fair and Good")
+
+
+
+```
+Summary Stats:
+
+Very Good
+```{r}
+mean(vg$price)
+sd(vg$price)
+nrow(vg)
+
+```
+Premium
+```{r}
+mean(p$price)
+sd(p$price)
+nrow(p)
+```
+Ideal
+```{r}
+mean(i$price)
+sd(i$price)
+nrow(i)
+```
+Fair
+```{r}
+mean(fg$price)
+sd(fg$price)
+nrow(fg)
+```
+
