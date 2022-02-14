@@ -132,6 +132,6 @@ I conclude that there is evidence which supports my hypothesis. The P value is n
 
 13)
 
-Now lets see 
+The anova does not give us any information about the individual levels. It doesn't tell us the difference between the price between the levels, in only tells us how well our model accounts for the variance in the data. 
 
 
