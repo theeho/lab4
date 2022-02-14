@@ -41,11 +41,16 @@ ggplot(data = combine, aes(x=cut)) +
 ggplot(data = combine, aes(x=cut, y = price)) + geom_boxplot() + labs(title = "asccoation between diamond cut and price ", y = "price USD")
 ```
 ```{r}
+m1 <- lm(price~cut, data = combine)
+summary(m1)
+```
+
+```{r}
 vg <- combine %>% filter(cut == "Very Good")
 p <- combine %>% filter(cut == "Premium")
 i <- combine %>% filter(cut == "Ideal")
 fg <- combine %>% filter(cut == "Fair and Good")
-
+summary(combine)
 
 
 ```
@@ -76,4 +81,57 @@ mean(fg$price)
 sd(fg$price)
 nrow(fg)
 ```
+
+Based on the graph and the summary statistics. There is some evidence to support an association between cut and price for diamonds that are .5 carrats as the means differ from eachother. However, more analysis of the assumptions of normality, independence and constant variance is needed.  
+
+
+
+```{r}
+mvg <- ggplot(data = vg, aes(x=price)) +
+         geom_histogram() + labs(title = "price distribution for very good cut")
+mp <- ggplot(data = p, aes(x=price)) +
+         geom_histogram() + labs(title = "price distribution for premium cut")
+mi <- ggplot(data =i, aes(x=price)) +
+         geom_histogram() + labs(title = "price distribution for ideal cut")
+mfg <- ggplot(data = fg, aes(x=price)) +
+         geom_histogram() + labs(title = "price distribution for fair cut")
+
+mvg 
+mp
+mi
+mfg
+```
+Normality: All of the distributions seems to be fairly normal. Although, cuts that are fair and very good seem to be more uniform than normal. 
+
+Independence: Based on the quality of the dataset and context that diamond prices are usually independent it can be assumed that independence assumption is satasfied. 
+
+Constant Variance: The variance differs slightly between the groups. The range of standard deviations is [304, 368]. But considering the range of prices is [584, 3387] I think this assumption of constant variance can be satasified. 
+```{r}
+anova <- aov(price ~ cut, data = combine)
+summary(anova)
+```
+
+9)
+Total sum of sqauares = 11507056 + 150706506 = 162213562
+Sample variance = 162213562/(n-1) = 129048
+
+10)
+fair sd = 364, variance = 132496
+very good sd = 339, variance = 114921
+ideal sd = 368, variance = 135424
+premium sd = 304, variance = 92416
+
+11)
+Null hypothesis:  There is no association between cut and price. That is, the mean for price is the no different between different cuts.
+
+Hypothesis: There is an association between cut and price. That is, the mean for price is different for different cuts. 
+
+12)
+
+I conclude that there is evidence which supports my hypothesis. The P value is near zero for the anova model. The variance between the model and the data supports the hypothesis that there is some difference in price ascociated with cut.  
+
+13)
+
+Now lets see 
+
 
